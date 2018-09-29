@@ -12,10 +12,12 @@ class UsersController extends Controller
 
     public function __construct()
     {
+        //除了一下这些，其他都需要登录
         $this->middleware('auth',[
            'except' => ['show','create','store','index','confirmEmail']
         ]);
 
+        //只允许未登录
         $this->middleware('guest',[
            'only' => ['create']
         ]);
@@ -60,13 +62,11 @@ class UsersController extends Controller
     {
         $view = 'emails.confirm';
         $data = compact('user');
-        $from = '594708461@qq.com';
-        $name = '恩苏';
         $to   = $user->email;
         $subject = "感谢注册 Sample 应用！请确认你的邮箱。";
 
-        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
-            $message->from($from, $name)->to($to)->subject($subject);
+        Mail::send($view, $data, function ($message) use ($to, $subject) {
+            $message->to($to)->subject($subject);
         });
     }
 
