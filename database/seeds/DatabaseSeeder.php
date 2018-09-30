@@ -12,8 +12,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \Illuminate\Database\Eloquent\Model::unguard();
+
         $this->call(UsersTableSeeder::class);
         $this->call(StatusesTableSeeder::class);
+        $this->call(FollowersTableSeeder::class);
+
         \Illuminate\Database\Eloquent\Model::reguard();
     }
 }
